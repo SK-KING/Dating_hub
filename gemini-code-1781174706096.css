@@ -1,0 +1,6 @@
+/* Smooth scrollbar for chat */
+.chat-stream::-webkit-scrollbar { width: 4px; }
+.chat-stream::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+
+/* Custom adjustments */
+button:active { transform: scale(0.98); }
