@@ -1,30 +1,33 @@
-function switchTab(tab) {
-    document.getElementById('tab-chat').classList.add('hidden');
-    document.getElementById('tab-profile').classList.add('hidden');
-    document.getElementById('tab-' + tab).classList.remove('hidden');
+let userProfile = {};
+
+// Step 1 to Step 2
+function saveOnboard() {
+    userProfile.age = document.getElementById('in-age').value;
+    document.getElementById('screen-onboard').classList.add('hidden');
+    document.getElementById('screen-profile').classList.remove('hidden');
 }
 
+// Step 2 to Step 3
+function finishSetup() {
+    userProfile.name = document.getElementById('in-name').value;
+    userProfile.loc = document.getElementById('in-loc').value;
+    
+    document.getElementById('screen-profile').classList.add('hidden');
+    document.getElementById('screen-main').classList.remove('hidden');
+    alert("Welcome " + userProfile.name + "! Profile ready.");
+}
+
+// Chatting Logic
 function sendMessage() {
     let input = document.getElementById('chat-input');
-    let msg = input.value.toLowerCase();
-    if(!msg) return;
-
     let stream = document.getElementById('chat-stream');
+    if(!input.value) return;
+
     stream.innerHTML += `<div class="text-right text-sm">You: ${input.value}</div>`;
     
-    // Smart Keyword Matching Logic
-    let reply = "Wow, aur batao! Main aapki baatein sun raha hoon.";
-    if(msg.includes('hi') || msg.includes('hello')) reply = "Hey! Kaise ho aap? Kya chal raha hai aajkal?";
-    else if(msg.includes('hobby') || msg.includes('kya karte ho')) reply = "Mujhe logo se connect karna aur baatein karna pasand hai. Aapki hobbies kya hain?";
-    else if(msg.includes('instagram')) reply = "Instagram par toh main photos dekhta hoon, par yahan aapse baat karna zyada mazedaar hai!";
-    
+    // Auto-reply logic
     setTimeout(() => {
-        stream.innerHTML += `<div class="text-pink-400 text-sm">Bot: ${reply}</div>`;
+        stream.innerHTML += `<div class="text-pink-400 text-sm">Bot: Hey ${userProfile.name}, kaisa raha aapka din?</div>`;
         input.value = '';
-        stream.scrollTop = stream.scrollHeight;
     }, 800);
-}
-
-function saveProfile() {
-    alert("Profile Saved successfully!");
 }
